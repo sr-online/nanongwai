@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>READ•WRITE RADAR 2569 | เรดาร์อ่านคล่อง เขียนคล่อง</title>
+<meta name="description" content="รายงานการคัดกรองความสามารถในการอ่านและการเขียนของนักเรียนชั้น ป.1 – ม.3 ภาคเรียนที่ 1 ปีการศึกษา 2569">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>
+  // apply saved theme before paint
+  try{var t=localStorage.getItem('rwr-theme'); if(t) document.documentElement.setAttribute('data-theme',t);}catch(e){}
+</script>
+</head>
+<body>
+
+<!-- ============ ICON SPRITE ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15v3M11 10v8M15 6v12M19 12v6"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L22 14l-8 8-2.3-2.3a4 4 0 0 0-5-5L2 10l8-8z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5M12 3v12"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-top" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="logo" href="#principle" aria-label="หน้าแรก">
+      <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity=".5"/><circle cx="12" cy="12" r="5" opacity=".8"/><path d="M12 12 18 6"/><circle cx="12" cy="12" r="1.6" fill="#fff"/></svg></span>
+      <span><b>READ•WRITE RADAR</b><small data-bind="school">โรงเรียน</small></span>
+    </a>
+    <nav class="nav" aria-label="เมนูหลัก">
+      <a href="#principle" data-nav="principle"><span class="n">1</span>หลักการ<span class="t-long">และเหตุผล</span></a>
+      <a href="#method" data-nav="method"><span class="n">2</span>วิธี<span class="t-long">ดำเนินการ</span></a>
+      <a href="#results" data-nav="results"><span class="n">3</span>สรุปผล<span class="t-long">การศึกษา</span></a>
+      <a href="#appendix" data-nav="appendix"><span class="n">4</span>ภาคผนวก</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="btnSettings" title="ตั้งค่าข้อมูลโรงเรียน" aria-label="ตั้งค่า"><svg><use href="#i-gear"/></svg></button>
+      <button class="icon-btn" id="btnPrint" title="พิมพ์ / บันทึก PDF" aria-label="พิมพ์"><svg><use href="#i-print"/></svg></button>
+      <button class="icon-btn" id="btnTheme" title="สลับโหมดสว่าง/มืด" aria-label="สลับธีม"><svg><use href="#i-moon"/></svg></button>
+    </div>
+    <div class="progress" id="progress"></div>
+  </div>
+</header>
+
+<main>
+
+<!-- =====================================================
+     PAGE 1 : หลักการและเหตุผล
+     ===================================================== -->
+<section class="page" data-page="principle">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="chip"><span class="dot"></span> ภาคเรียนที่ 1 ปีการศึกษา <span data-bind="year">2569</span></span>
+        <h1>READ•WRITE RADAR <span class="thin" data-bind="year">2569</span><br><span class="thin">เรดาร์ </span><span class="nw">อ่านคล่อง</span> <span class="nw">เขียนคล่อง</span></h1>
+        <p class="lead">รายงานการคัดกรองความสามารถในการอ่านและการเขียนของนักเรียนชั้นประถมศึกษาปีที่ 1 – มัธยมศึกษาปีที่ 3<br><b><span data-bind="school">โรงเรียน</span></b><br><span data-bind="area"></span><br>ภาคเรียนที่ 1 ปีการศึกษา <span data-bind="year">2569</span></p>
+        <div class="hero-cta">
+          <a class="btn btn-white" href="#results"><svg><use href="#i-chart"/></svg> ดูแดชบอร์ดผลการคัดกรอง</a>
+          <a class="btn btn-ghost" href="#method"><svg><use href="#i-arrow"/></svg> ขั้นตอนดำเนินงาน</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><b data-kpi="total">0</b><span>นักเรียนเข้ารับการคัดกรอง (คน)</span></div>
+        <div class="hstat"><b>9</b><span>ระดับชั้น ป.1 – ม.3</span></div>
+        <div class="hstat"><b>4</b><span>ทักษะหลัก อ่านออกเสียง · อ่านรู้เรื่อง · เขียนคำ · เขียนเรื่อง</span></div>
+        <div class="hstat"><b data-kpi="goodPct">0%</b><span>ระดับดี–ดีมาก (ภาพรวม)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- 1. หลักการและเหตุผล -->
+    <div class="section reveal">
+      <div class="sec-head"><div><div class="eyebrow">01 · Rationale</div><h2>หลักการและเหตุผล</h2></div></div>
+      <div class="grid g3">
+        <div class="card span2 prose">
+          <p>กระทรวงศึกษาธิการเล็งเห็นถึงความสำคัญของการยกระดับคุณภาพการศึกษา โดยมีนโยบายให้ทุกหน่วยงานที่เกี่ยวข้องให้ความสำคัญกับการจัดการศึกษาที่มีระบบเพื่อการพัฒนาเด็กและเยาวชนไปสู่ความเป็นพลเมืองที่สมบูรณ์ สามารถดำรงตนในสังคมอย่างปกติสุข</p>
+          <p>การใช้ภาษาไทย โดยเฉพาะทักษะการอ่านและการเขียน เป็นทักษะที่จำเป็นอย่างยิ่งสำหรับการเรียนรู้ และการพัฒนาชีวิตสู่ความสำเร็จ เพราะจะนำมาซึ่งความรู้และส่งเสริมให้เกิดการคิดวิเคราะห์ มีวิจารณญาณ แยกแยะ และประยุกต์ใช้ข้อมูลที่เป็นประโยชน์ต่อชีวิต พร้อมทั้งสามารถถ่ายทอดสื่อสารความรู้ ความคิด ให้ผู้อื่นทราบและเข้าใจได้ ซึ่งเป็นทักษะที่สำคัญในศตวรรษที่ 21 หากผู้เรียนบกพร่องหรือขาดความสามารถในทักษะดังกล่าวจะส่งผลให้การเรียนรู้ไม่อาจก้าวหน้าได้ และจะประสบความยากลำบากในการดำรงชีวิต จึงเป็นหน้าที่ของหน่วยงานที่เกี่ยวข้องกับการจัดการศึกษาที่จะต้องพัฒนาความสามารถในการอ่านและการเขียน รวมทั้งส่งเสริมการคิดวิเคราะห์ และการสื่อสารให้แก่ประชาชนตั้งแต่วัยเยาว์ เพื่อให้สามารถเรียนรู้ในระดับที่ซับซ้อนขึ้นเมื่อเติบใหญ่ และนำไปสู่การเป็นผู้เรียนรู้ตลอดชีวิต</p>
+          <p>ดังนั้นในช่วงระยะเวลา 9 ปี ของการจัดการศึกษาภาคบังคับ และ 12 ปี ของการจัดการศึกษาขั้นพื้นฐานให้กับเด็กและเยาวชน จึงเป็นช่วงเวลาที่สำคัญต่อการวางรากฐานให้นักเรียนที่มีความสามารถในการเรียนรู้ให้มั่นคง ซึ่งการรู้หนังสือหรือการอ่านออกเขียนได้ อ่านคล่องเขียนคล่อง และสื่อสารได้นับเป็นพื้นฐานที่สำคัญอันดับแรก ๆ ของการพัฒนาขีดความสามารถของผู้เรียน ทั้งนี้ การพัฒนาความสามารถในการอ่านและการเขียน นอกจากครูจะต้องมีความรู้ เข้าใจทักษะและกระบวนการพัฒนาความสามารถในการอ่านและการเขียนของนักเรียน ทั้งนักเรียนปกติและนักเรียนที่ต้องได้รับการเอาใจใส่เป็นพิเศษแล้ว ครูยังต้องเข้าใจถึงความแตกต่างของผู้เรียน ทั้งความแตกต่างทางสติปัญญาและความแตกต่างทางพื้นฐานของครอบครัว ซึ่งเป็นปัจจัยสำคัญที่ควรคำนึงถึงในการพัฒนาความสามารถของผู้เรียน</p>
+          <p>ด้วยเหตุนี้ เพื่อส่งเสริมให้นักเรียนได้รับการพัฒนาความสามารถในการอ่านและการเขียนภาษาไทยได้อย่างมีประสิทธิภาพ สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน โดยสำนักวิชาการและมาตรฐานการศึกษา จึงได้ดำเนินการสร้างและพัฒนาเครื่องมือคัดกรองความสามารถในการอ่านและการเขียนของนักเรียนระดับการศึกษาขั้นพื้นฐานขึ้น โดยเป็นการประเมินเพื่อพัฒนาการเรียนรู้ (Formative Assessment) สำหรับเป็นข้อมูลการอ่านและการเขียนของนักเรียน เพื่อให้ครูและผู้มีส่วนเกี่ยวข้องทางการศึกษานำไปใช้ในการพัฒนานักเรียนให้เป็นผู้มีความสามารถในการสื่อสารภาษาไทยสำหรับใช้ในการเรียนรู้และการดำเนินชีวิตต่อไป โดยกรอบโครงสร้างของเครื่องมือที่สร้างขึ้นนี้ จัดทำขึ้นจากการวิเคราะห์หลักสูตรกลุ่มสาระการเรียนรู้ภาษาไทย ในมาตรฐานการเรียนรู้และตัวชี้วัดในระดับชั้นประถมศึกษาปีที่ 1 – ชั้นมัธยมศึกษาปีที่ 3 ตามหลักสูตรแกนกลางการศึกษาขั้นพื้นฐาน พุทธศักราช 2551</p>
+          <p>เครื่องมือที่สร้างขึ้นนี้ สร้างโดยศึกษานิเทศก์ที่รับผิดชอบด้านภาษาไทย ครูผู้สอนภาษาไทยที่มีความรู้และประสบการณ์ในการสอนภาษาไทย และได้รับรางวัลด้านการสอนภาษาไทย และตรวจสอบคุณภาพโดยผู้ทรงคุณวุฒิทางด้านการสอนภาษาไทยและการวัดและประเมินผลจากสถาบันอุดมศึกษา ซึ่งครูผู้สอนสามารถนำผลของการคัดกรองไปใช้เป็นข้อมูลในการวินิจฉัยนักเรียนเพื่อพัฒนานักเรียนได้ตรงตามความเป็นจริง</p>
+        </div>
+        <div class="grid" style="align-content:start">
+          <div class="card">
+            <h3>วงจรพัฒนาการอ่าน–เขียน</h3>
+            <p class="sub">Formative Assessment Cycle</p>
+            <div id="cycleModel" class="cycle"></div>
+          </div>
+          <div class="callout">
+            <span class="ic"><svg><use href="#i-bulb"/></svg></span>
+            <p><b>หัวใจของโครงการ</b><br>“อ่านออก เขียนได้ คิดเป็น ทำได้ คือรากฐานของการเรียนรู้ตลอดชีวิต”</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. จุดประสงค์ -->
+    <div class="section reveal">
+      <div class="sec-head"><div><div class="eyebrow">02 · Objectives</div><h2>จุดประสงค์ของการคัดกรอง</h2></div></div>
+      <div class="grid g2">
+        <div class="card feat"><div class="ic c1"><svg><use href="#i-target"/></svg></div><h3>2.1 คัดกรองความสามารถ</h3><p>เพื่อคัดกรองความสามารถในการอ่านและการเขียนของนักเรียนชั้นประถมศึกษาปีที่ 1 – ชั้นมัธยมศึกษาปีที่ 3</p></div>
+        <div class="card feat"><div class="ic c2"><svg><use href="#i-chart"/></svg></div><h3>2.2 ข้อมูลเพื่อการพัฒนา</h3><p>เพื่อให้ได้ข้อมูลผลการคัดกรองความสามารถในการอ่านและการเขียน สำหรับผู้ที่เกี่ยวข้องนำไปใช้ในการวางแผนปรับปรุงและพัฒนานักเรียน</p></div>
+      </div>
+    </div>
+
+    <!-- 3. นิยามศัพท์ (model) -->
+    <div class="section reveal">
+      <div class="sec-head"><div><div class="eyebrow">03 · Definition Model</div><h2>นิยามศัพท์เฉพาะ</h2><p>โมเดลโครงสร้างทักษะที่ใช้ในการประเมิน — วางเมาส์/แตะที่กล่องเพื่ออ่านนิยาม</p></div></div>
+      <div class="card">
+        <div class="model-wrap" id="defModel"></div>
+        <div class="grid g2" style="margin-top:14px" id="defDetail"></div>
+      </div>
+    </div>
+
+    <!-- 4-5 เครื่องมือ & เป้าหมาย -->
+    <div class="section reveal">
+      <div class="sec-head"><div><div class="eyebrow">04–05 · Tools &amp; Goals</div><h2>ลักษณะเครื่องมือ และเป้าหมาย</h2></div></div>
+      <div class="grid g3">
+        <div class="card feat"><div class="ic c3"><svg><use href="#i-tool"/></svg></div><h3>ลักษณะของเครื่องมือ</h3><p>แบบทดสอบวัดความสามารถในการอ่านและการเขียนของนักเรียน ชั้นประถมศึกษาปีที่ 1 – ชั้นมัธยมศึกษาปีที่ 3 จากระบบรายงานการอ่านออกเขียนได้ ของ สพฐ.</p></div>
+        <div class="card feat"><div class="ic c5"><svg><use href="#i-shield"/></svg></div><h3>เป้าหมายเชิงคุณภาพ</h3>
+          <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:14.5px">
+            <li>ครูสามารถสะท้อนปัญหาและความต้องการในการพัฒนาการอ่าน การเขียนของนักเรียนได้</li>
+            <li>สามารถพัฒนานวัตกรรมเพื่อแก้ไขปัญหาการอ่าน การเขียนของนักเรียนได้</li>
+            <li>การประเมินการอ่าน การเขียนเป็นไปด้วยความบริสุทธิ์ ยุติธรรม</li>
+          </ul></div>
+        <div class="card feat"><div class="ic c6"><svg><use href="#i-users"/></svg></div><h3>เป้าหมายเชิงปริมาณ</h3>
+          <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:14.5px">
+            <li>นักเรียนชั้น ป.1 – ม.3 จำนวน <b data-kpi="total">0</b> คน</li>
+            <li>นวัตกรรมการพัฒนาการอ่าน การเขียนตามสภาพและความต้องการของนักเรียน</li>
+          </ul></div>
+      </div>
+    </div>
+
+    <div class="pager"><span></span><a class="next" href="#method"><small>หน้าถัดไป</small>2 · วิธีดำเนินการ →</a></div>
+  </div>
+</section>
+
+<!-- =====================================================
+     PAGE 2 : วิธีดำเนินการ
+     ===================================================== -->
+<section class="page" data-page="method" hidden>
+  <div class="wrap">
+    <div class="page-hero">
+      <span class="big-n">02</span>
+      <div class="eyebrow">Methodology</div>
+      <h1>วิธีดำเนินการ</h1>
+      <p>กระบวนการคัดกรอง 9 ขั้นตอน ตั้งแต่การแต่งตั้งคณะทำงาน ดำเนินการสอบ วิเคราะห์ผล จนถึงการพัฒนาและรายงานผล — ระยะเวลาดำเนินการ 1 – 31 กรกฎาคม <span data-bind="year">2569</span></p>
+    </div>
+
+    <!-- process model -->
+    <div class="section reveal">
+      <div class="sec-head"><div><div class="eyebrow">Process Model</div><h2>โมเดลกระบวนการ PLAN → DO → CHECK → ACT</h2><p>9 ขั้นตอนจัดกลุ่มตามวงจรคุณภาพ PDCA</p></div></div>
+      <div class="card"><div class="model-wrap" id="pdcaModel"></div></div>
+    </div>
+
+    <!-- steps -->
+    <div class="section reveal">
+      <div class="sec-head">
+        <div><div class="eyebrow">06 · Steps</div><h2>ขั้นตอนการดำเนินงาน</h2><p>คลิกแต่ละขั้นเพื่อดูรายละเอียด และติ๊กสถานะเมื่อดำเนินการเสร็จ</p></div>
+        <div class="toolbar"><span class="pill" id="stepProgress">เสร็จแล้ว 0/9</span></div>
+      </div>
+      <div class="grid g3">
+        <div class="steps span2" id="stepList"></div>
+        <div class="card" style="align-self:start;position:sticky;top:86px">
+          <h3>ความคืบหน้า</h3><p class="sub">ติดตามสถานะการดำเนินงาน</p>
+          <div class="gauge-wrap" id="stepGauge"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- criteria -->
+    <div class="section reveal">
+      <div class="sec-head"><div><div class="eyebrow">07 · Criteria</div><h2>เกณฑ์ระดับคะแนนและการแปลผล</h2><p>ลองกรอกคะแนนเพื่อแปลผลอัตโนมัติ</p></div></div>
+      <div class="card">
+        <div class="band" id="band"></div>
+        <div class="band-scale"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+        <div class="marker-track"><div class="marker" id="marker" style="left:0" hidden><i></i></div></div>
+        <div class="calc">
+          <label class="field">คะแนนที่ได้<input class="input" type="number" id="cScore" min="0" value="18" style="width:120px"></label>
+          <label class="field">คะแนนเต็ม<input class="input" type="number" id="cFull" min="1" value="25" style="width:120px"></label>
+          <div class="result-badge" id="cResult">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- indicator matrix -->
+    <div class="section reveal">
+      <div class="sec-head"><div><div class="eyebrow">Indicator Matrix</div><h2>ตัวชี้วัดในการคัดกรองแยกตามระดับชั้น</h2></div></div>
+      <div class="tbl-wrap"><table class="tbl" id="matrix"></table></div>
+    </div>
+
+    <!-- timeline -->
+    <div class="section reveal">
+      <div class="sec-head"><div><div class="eyebrow">09 · Timeline</div><h2>ระยะเวลาดำเนินการ</h2><p>ภาคเรียนที่ 1 ปีการศึกษา <span data-bind="year">2569</span> (ระหว่างวันที่ 1 – 31 กรกฎาคม <span data-bind="year">2569</span>)</p></div></div>
+      <div class="card"><div class="gantt" id="gantt"></div></div>
+    </div>
+
+    <!-- use of results -->
+    <div class="section reveal">
+      <div class="sec-head"><div><div class="eyebrow">08 · Utilization</div><h2>การนำผลการคัดกรองไปใช้ในการพัฒนานักเรียน</h2></div></div>
+      <div class="grid g3">
+        <div class="card feat"><div class="ic c1"><svg><use href="#i-chart"/></svg></div><h3>พิจารณาผลทั้งภาพรวมและรายบุคคล</h3><p>ครูพิจารณาผลการคัดกรองเพื่อให้ทราบว่านักเรียนแต่ละคนมีความสามารถและทักษะใดที่ควรได้รับการพัฒนา</p></div>
+        <div class="card feat"><div class="ic c2"><svg><use href="#i-book"/></svg></div><h3>ต่อยอดนักเรียนที่มีความสามารถสูง</h3><p>วางแผนปรับปรุงและพัฒนาการอ่านและการเขียนของนักเรียนซึ่งมีความสามารถสูงให้ดียิ่งขึ้น</p></div>
+        <div class="card feat"><div class="ic c4"><svg><use href="#i-pen"/></svg></div><h3>ซ่อมเสริมนักเรียนกลุ่มเสี่ยง</h3><p>ปรับกระบวนการจัดการเรียนการสอนให้เหมาะสม เช่น การจัดสอนซ่อมเสริมนักเรียนเป็นรายบุคคลเพิ่มเติม</p></div>
+      </div>
+    </div>
+
+    <div class="pager"><a href="#principle"><small>ก่อนหน้า</small>← 1 · หลักการและเหตุผล</a><a class="next" href="#results"><small>หน้าถัดไป</small>3 · สรุปผลการศึกษา →</a></div>
+  </div>
+</section>
+
+<!-- =====================================================
+     PAGE 3 : สรุปผลการศึกษา
+     ===================================================== -->
+<section class="page" data-page="results" hidden>
+  <div class="wrap">
+    <div class="page-hero">
+      <span class="big-n">03</span>
+      <div class="eyebrow">Results Dashboard</div>
+      <h1>สรุปผลการศึกษา</h1>
+      <p>แดชบอร์ดผลการคัดกรองการอ่านและการเขียน ชั้น ป.1 – ม.3 ปีการศึกษา <span data-bind="year">2569</span> — กราฟ ตาราง และบทสรุปทั้งหมดคำนวณอัตโนมัติจากข้อมูลที่กรอก</p>
+      <div class="toolbar" style="margin-top:16px">
+        <button class="btn btn-primary" id="btnEntry"><svg><use href="#i-edit"/></svg> กรอก / แก้ไขข้อมูลผลคัดกรอง</button>
+        <button class="btn btn-soft" id="btnCSV"><svg><use href="#i-down"/></svg> ส่งออก Excel (CSV)</button>
+        <button class="btn btn-soft" id="btnExport"><svg><use href="#i-down"/></svg> สำรองข้อมูล (JSON)</button>
+        <label class="btn btn-soft" style="cursor:pointer"><svg><use href="#i-up"/></svg> นำเข้าข้อมูล<input type="file" id="fileImport" accept=".json,application/json" hidden></label>
+      </div>
+    </div>
+
+    <div class="section" id="dataNotice"></div>
+
+    <!-- KPI -->
+    <div class="section kpis" style="margin-top:20px">
+      <div class="card kpi"><div class="lbl"><i class="c1"><svg><use href="#i-users"/></svg></i>นักเรียนเข้ารับการคัดกรอง</div><div class="val"><span data-kpi="total">0</span> <small>คน</small></div><div class="foot" data-kpi="gradesFoot">9 ระดับชั้น</div><div class="spark c1"></div></div>
+      <div class="card kpi"><div class="lbl"><i class="c3"><svg><use href="#i-shield"/></svg></i>นักเรียนปกติ</div><div class="val"><span data-kpi="normal">0</span> <small data-kpi="normalPct">0%</small></div><div class="foot">ของนักเรียนทั้งหมด</div><div class="spark c3"></div></div>
+      <div class="card kpi"><div class="lbl"><i class="c2"><svg><use href="#i-alert"/></svg></i>นักเรียนที่บกพร่อง</div><div class="val"><span data-kpi="impaired">0</span> <small data-kpi="impairedPct">0%</small></div><div class="foot">ต้องการการดูแลเป็นพิเศษ</div><div class="spark c2"></div></div>
+      <div class="card kpi"><div class="lbl"><i class="c5"><svg><use href="#i-target"/></svg></i>ระดับดี – ดีมาก</div><div class="val"><span data-kpi="goodPct">0%</span></div><div class="foot" data-kpi="qualityFoot">ของผลประเมินทุกตัวชี้วัด</div><div class="spark c5"></div></div>
+    </div>
+
+    <!-- row 1 -->
+    <div class="section grid g3">
+      <div class="card">
+        <h3>สัดส่วนระดับผลการประเมินภาพรวม</h3><p class="sub">รวมทุกตัวชี้วัด ทุกระดับชั้น</p>
+        <div class="legend" id="lgLevels"></div>
+        <div class="chart-box short"><canvas id="chDonut" aria-label="กราฟโดนัทระดับผลการประเมิน"></canvas></div>
+      </div>
+      <div class="card span2">
+        <div class="sec-head" style="margin:0 0 4px">
+          <div><h3>ระดับผลการประเมินแยกตามระดับชั้น</h3><p class="sub" style="margin:0">ร้อยละของผลประเมินทุกตัวชี้วัดในแต่ละชั้น</p></div>
+          <div class="seg" id="segMode"><button class="on" data-v="pct">ร้อยละ</button><button data-v="count">จำนวน</button></div>
+        </div>
+        <div class="legend" id="lgLevels2"></div>
+        <div class="chart-box"><canvas id="chStack" aria-label="กราฟแท่งซ้อนระดับผลการประเมินรายชั้น"></canvas></div>
+      </div>
+    </div>
+
+    <!-- row 2 -->
+    <div class="section grid g2">
+      <div class="card">
+        <h3>นักเรียนปกติ / บกพร่อง รายชั้น</h3><p class="sub">จำนวนนักเรียน (คน)</p>
+        <div class="legend"><span><i style="background:var(--s-normal)"></i>นักเรียนปกติ</span><span><i style="background:var(--s-impaired)"></i>นักเรียนที่บกพร่อง</span></div>
+        <div class="chart-box"><canvas id="chPop"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>เปรียบเทียบด้านการอ่าน vs การเขียน</h3><p class="sub">ร้อยละนักเรียนระดับดี–ดีมาก</p>
+        <div class="legend"><span><i style="background:var(--s-read)"></i>ด้านการอ่าน</span><span><i style="background:var(--s-write)"></i>ด้านการเขียน</span></div>
+        <div class="chart-box"><canvas id="chRW"></canvas></div>
+      </div>
+    </div>
+
+    <!-- heatmap -->
+    <div class="section card">
+      <h3>Skill Heatmap — ร้อยละระดับดี–ดีมาก แยกชั้น × ทักษะ</h3><p class="sub">สีเข้ม = ผลดี · ลายทแยง = ไม่มีการประเมินทักษะนั้นในชั้นนี้</p>
+      <div style="overflow-x:auto"><div class="heat" id="heat" style="min-width:620px"></div></div>
+      <div class="heat-scale"><span>0%</span><span class="g"></span><span>100%</span></div>
+    </div>
+
+    <!-- drilldown -->
+    <div class="section card">
+      <div class="sec-head" style="margin:0 0 6px">
+        <div><h3>เจาะลึกรายชั้น</h3><p class="sub" style="margin:0">เลือกระดับชั้นเพื่อดูผลแต่ละตัวชี้วัด และดัชนีคุณภาพ (เต็ม 4)</p></div>
+        <div class="seg" id="segGrade"></div>
+      </div>
+      <div class="grid g3" style="margin-top:8px">
+        <div class="span2">
+          <div class="legend" id="lgLevels3"></div>
+          <div class="chart-box short"><canvas id="chDrill"></canvas></div>
+        </div>
+        <div class="gauge-wrap" id="gauge"></div>
+      </div>
+    </div>
+
+    <!-- tables -->
+    <div class="section">
+      <div class="sec-head">
+        <div><div class="eyebrow">10–11 · Data Tables</div><h2>ตารางสรุปผลการคัดกรอง</h2></div>
+        <div class="seg" id="segTable"><button class="on" data-v="count">เป็นจำนวนคน</button><button data-v="pct">เป็นค่าร้อยละ</button></div>
+      </div>
+      <div class="tbl-wrap"><table class="tbl" id="resTable"></table></div>
+    </div>
+
+    <!-- summary -->
+    <div class="section">
+      <div class="sec-head"><div><div class="eyebrow">12 · Conclusion</div><h2>สรุปผลการคัดกรองการอ่านและการเขียน</h2><p>บทสรุปเรียบเรียงอัตโนมัติจากข้อมูล</p></div>
+        <button class="btn btn-soft btn-sm" id="btnCopy"><svg><use href="#i-edit"/></svg> คัดลอกข้อความ</button></div>
+      <div class="card summary-text" id="summary"></div>
+    </div>
+
+    <!-- solutions -->
+    <div class="section">
+      <div class="sec-head"><div><div class="eyebrow">13 · Action Plan</div><h2>แนวทางการแก้ไขปัญหา</h2><p>จากผลการคัดกรอง พบว่ายังมีนักเรียนบางส่วนที่มีผลการประเมินอยู่ในระดับพอใช้และระดับปรับปรุง โรงเรียนจึงกำหนดแนวทางดังนี้</p></div></div>
+      <div class="grid g2" id="solutions"></div>
+      <div class="callout" style="margin-top:18px"><span class="ic"><svg><use href="#i-target"/></svg></span><p>การดำเนินงานตามแนวทางดังกล่าวจะช่วยให้นักเรียนที่มีปัญหาด้านการอ่านและการเขียนได้รับการพัฒนาอย่างเหมาะสมตามศักยภาพ ลดจำนวนนักเรียนที่มีผลการประเมินอยู่ในระดับพอใช้และปรับปรุง พร้อมทั้งยกระดับคุณภาพการอ่านและการเขียนของผู้เรียนให้เป็นไปตามมาตรฐานการศึกษาของสถานศึกษาและนโยบายของ สพฐ. ได้อย่างมีประสิทธิภาพ</p></div>
+    </div>
+
+    <div class="pager"><a href="#method"><small>ก่อนหน้า</small>← 2 · วิธีดำเนินการ</a><a class="next" href="#appendix"><small>หน้าถัดไป</small>4 · ภาคผนวก →</a></div>
+  </div>
+</section>
+
+<!-- =====================================================
+     PAGE 4 : ภาคผนวก
+     ===================================================== -->
+<section class="page" data-page="appendix" hidden>
+  <div class="wrap">
+    <div class="page-hero">
+      <span class="big-n">04</span>
+      <div class="eyebrow">Appendix</div>
+      <h1>ภาคผนวก</h1>
+      <p>เอกสารประกอบ คำสั่งแต่งตั้ง รายชื่อนักเรียน เครื่องมือคัดกรอง ภาพกิจกรรม และคณะผู้จัดทำ</p>
+    </div>
+
+    <div class="section">
+      <div class="tabs" id="apxTabs">
+        <button class="tab on" data-t="a"><b>ก</b>คำสั่งคณะกรรมการ</button>
+        <button class="tab" data-t="b"><b>ข</b>รายชื่อนักเรียนบกพร่อง</button>
+        <button class="tab" data-t="c"><b>ค</b>เครื่องมือ ป.1–6</button>
+        <button class="tab" data-t="d"><b>ง</b>เครื่องมือ ม.1–3</button>
+        <button class="tab" data-t="e"><b>จ</b>ภาพกิจกรรม</button>
+        <button class="tab" data-t="f"><b>★</b>คณะผู้จัดทำ</button>
+      </div>
+
+      <!-- ก -->
+      <div class="apx" data-apx="a">
+        <div class="card">
+          <h3>ภาคผนวก ก · คำสั่งคณะกรรมการดำเนินงาน</h3>
+          <p class="sub">คำสั่งแต่งตั้งคณะกรรมการดำเนินการสอบคัดกรองความสามารถในการอ่านและการเขียน — คลิกเพื่อขยาย</p>
+          <div class="docs" id="docsA"></div>
+        </div>
+      </div>
+
+      <!-- ข -->
+      <div class="apx" data-apx="b" hidden>
+        <div class="grid g3">
+          <div class="card span2">
+            <div class="sec-head" style="margin:0 0 10px">
+              <div><h3>ภาคผนวก ข · รายชื่อนักเรียนที่มีความบกพร่องทางการเรียนรู้</h3><p class="sub" style="margin:0">เพิ่ม / แก้ไข / ลบรายชื่อได้ ข้อมูลบันทึกอัตโนมัติ</p></div>
+              <div class="toolbar">
+                <input class="input" id="stuSearch" placeholder="ค้นหาชื่อ…" style="width:160px">
+                <select class="input" id="stuFilter"><option value="">ทุกชั้น</option></select>
+              </div>
+            </div>
+            <form id="stuForm" class="toolbar" style="margin-bottom:12px">
+              <input class="input" name="name" placeholder="ชื่อ – สกุล" required style="flex:2;min-width:160px">
+              <select class="input" name="type" id="stuType" style="flex:1;min-width:150px"></select>
+              <select class="input" name="grade" id="stuGrade" style="width:100px"></select>
+              <button class="btn btn-primary btn-sm" type="submit"><svg><use href="#i-plus"/></svg> เพิ่ม</button>
+            </form>
+            <div class="tbl-wrap"><table class="tbl" id="stuTable"></table></div>
+          </div>
+          <div class="card">
+            <h3>สรุปตามประเภทความบกพร่อง</h3><p class="sub">จำนวน (คน)</p>
+            <div class="chart-box short"><canvas id="chStu"></canvas></div>
+            <div id="stuStat" style="margin-top:12px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ค -->
+      <div class="apx" data-apx="c" hidden>
+        <div class="card">
+          <h3>ภาคผนวก ค · เครื่องมือการคัดกรอง “ความสามารถในการอ่านและการเขียน”</h3>
+          <p class="sub">ของนักเรียนชั้นประถมศึกษาปีที่ 1–6 ภาคเรียนที่ 1 ปีการศึกษา <span data-bind="year">2569</span> — สแกน QR Code เพื่อเปิดเอกสาร</p>
+          <div class="grid g3" id="qrP"></div>
+        </div>
+      </div>
+
+      <!-- ง -->
+      <div class="apx" data-apx="d" hidden>
+        <div class="card">
+          <h3>ภาคผนวก ง · เครื่องมือการคัดกรอง “ความสามารถในการอ่านและการเขียน”</h3>
+          <p class="sub">ของนักเรียนชั้นมัธยมศึกษาปีที่ 1–3 ภาคเรียนที่ 1 ปีการศึกษา <span data-bind="year">2569</span> — สแกน QR Code เพื่อเปิดเอกสาร</p>
+          <div class="grid g3" id="qrM"></div>
+        </div>
+      </div>
+
+      <!-- จ -->
+      <div class="apx" data-apx="e" hidden>
+        <div class="card">
+          <h3>ภาคผนวก จ · ภาพกิจกรรมดำเนินการคัดกรอง</h3>
+          <p class="sub">ภาพการดำเนินการคัดกรองความสามารถในการอ่านและการเขียนของนักเรียน — อัปโหลดภาพเพิ่มได้ (ลากไฟล์มาวาง)</p>
+          <div class="gallery" id="gallery"></div>
+        </div>
+      </div>
+
+      <!-- ★ -->
+      <div class="apx" data-apx="f" hidden>
+        <div class="card">
+          <h3>คณะกรรมการดำเนินการจัดทำเล่มรายงานสรุปผล</h3>
+          <p class="sub">คลิกที่ช่องชื่อเพื่อแก้ไข ข้อมูลบันทึกอัตโนมัติ</p>
+          <div class="tbl-wrap committee"><table class="tbl" id="committee"></table></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pager"><a href="#results"><small>ก่อนหน้า</small>← 3 · สรุปผลการศึกษา</a><a class="next" href="#principle"><small>กลับหน้าแรก</small>1 · หลักการและเหตุผล ↺</a></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">READ•WRITE RADAR <span data-bind="year">2569</span> · รายงานการคัดกรองความสามารถในการอ่านและการเขียน ป.1 – ม.3 · <span data-bind="school">โรงเรียน</span> · <span data-bind="area"></span></div>
+</footer>
+
+<!-- ============ MODALS ============ -->
+<div class="modal" id="mEntry" hidden>
+  <div class="modal-bg" data-close></div>
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>กรอกข้อมูลผลการคัดกรอง</h3>
+      <button class="btn btn-soft btn-sm" id="btnSample">โหลดข้อมูลตัวอย่าง</button>
+      <button class="btn btn-danger btn-sm" id="btnClear"><svg><use href="#i-trash"/></svg> ล้างข้อมูลทั้งหมด</button>
+      <button class="icon-btn" data-close aria-label="ปิด"><svg><use href="#i-x"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="grade-tabs seg" id="entryTabs"></div>
+      <p style="margin:0 0 12px;color:var(--muted);font-size:13.5px">กรอกจำนวนนักเรียนทั้งหมด จำนวนนักเรียนที่บกพร่อง (ระบบคำนวณนักเรียนปกติให้) และจำนวนนักเรียนในแต่ละระดับผลการประเมินของแต่ละตัวชี้วัด · ระบบตรวจสอบว่าผลรวมแต่ละตัวชี้วัดเท่ากับจำนวนนักเรียนทั้งหมดหรือไม่</p>
+      <div id="entryBody"></div>
+    </div>
+    <div class="modal-foot">
+      <span style="margin-right:auto;color:var(--muted);font-size:13px;align-self:center">บันทึกอัตโนมัติทุกครั้งที่พิมพ์</span>
+      <button class="btn btn-primary" data-close>เสร็จสิ้น ดูผล</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="mSettings" hidden>
+  <div class="modal-bg" data-close></div>
+  <div class="modal-box sm">
+    <div class="modal-head"><h3>ตั้งค่าข้อมูลโรงเรียน</h3><button class="icon-btn" data-close aria-label="ปิด"><svg><use href="#i-x"/></svg></button></div>
+    <div class="modal-body" style="display:grid;gap:12px">
+      <label class="field">ชื่อโรงเรียน<input class="input" id="setSchool"></label>
+      <label class="field">สังกัด / เขตพื้นที่การศึกษา<input class="input" id="setArea"></label>
+      <label class="field">ปีการศึกษา<input class="input" id="setYear" type="number"></label>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" id="btnSaveSet">บันทึก</button></div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="x" aria-label="ปิด">×</button>
+  <button class="nv prev" aria-label="ก่อนหน้า">‹</button>
+  <img alt="">
+  <button class="nv next" aria-label="ถัดไป">›</button>
+  <div class="cap"></div>
+</div>
+
+<div class="tip" id="tip"></div>
+<div class="toast" id="toast"></div>
+<button class="icon-btn to-top" id="toTop" hidden aria-label="กลับด้านบน"><svg><use href="#i-top"/></svg></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

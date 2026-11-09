@@ -26,7 +26,7 @@
     const s = R.sample();
     return {
       settings: { school: 'โรงเรียนบ้านนาหนองหวาย', area: 'สำนักงานเขตพื้นที่การศึกษาประถมศึกษานครพนม เขต 2', year: 2569 },
-      grades: s.grades, students: s.students, isSample: true,
+      grades: s.grades, students: s.students, roster: s.roster, isSample: true,
       committee: R.COMMITTEE.map(() => ''), steps: {}
     };
   }
@@ -49,6 +49,9 @@
       gr.ind.forEach((k) => { const v = (src.ind || {})[k] || {}; eg[gr.id].ind[k] = { vg: +v.vg || 0, g: +v.g || 0, f: +v.f || 0, p: +v.p || 0 }; });
     });
     out.grades = eg;
+    // ข้อมูลตัวอย่างที่บันทึกไว้จากเวอร์ชันก่อน → แทนด้วยข้อมูลจำลองจากรายชื่อจริงชุดปัจจุบัน
+    if (d.isSample) { out.grades = base.grades; out.students = base.students; out.roster = base.roster; }
+    if (!Array.isArray(out.roster)) out.roster = [];
     if (!Array.isArray(out.students)) out.students = [];
     if (!Array.isArray(out.committee)) out.committee = R.COMMITTEE.map(() => '');
     return out;
@@ -479,6 +482,7 @@
     renderHeat(o);
     renderDrill();
     renderTable();
+    renderRoster();
     renderSummary(o);
     renderSolutions();
   }
@@ -572,6 +576,32 @@
     $('#resTable').innerHTML = h;
   }
 
+  /* ---------- ผลรายบุคคล (ผ่านเกณฑ์ / ซ่อมเสริม) ---------- */
+  let rosterMode = 'all';
+  const ROSTER_COLS = ['oral', 'comp', 'word', 'sentence', 'story'];
+  function renderRoster() {
+    const box = $('#rosterSec'); if (!box) return;
+    const list = S.roster || [];
+    box.hidden = !list.length; if (!list.length) return;
+    const gShort = {}; R.GRADES.forEach((g) => (gShort[g.id] = g.short));
+    const fg = $('#rosFilter').value, q = ($('#rosSearch').value || '').trim();
+    const rows = list.filter((s) => (!fg || s.grade === fg) && (!q || s.name.includes(q)) &&
+      (rosterMode === 'all' || (rosterMode === 'fail') === !!s.remedial));
+    const nFail = list.filter((s) => s.remedial).length;
+    $('#rosStat').innerHTML = `<span class="pill">ทั้งหมด <b>${fmt(list.length)}</b> คน</span>
+      <span class="chk ok">ผ่านเกณฑ์ ${fmt(list.length - nFail)} คน (${pct(list.length - nFail, list.length)}%)</span>
+      <span class="chk bad">ไม่ผ่านเกณฑ์ / ซ่อมเสริม ${fmt(nFail)} คน (${pct(nFail, list.length)}%)</span>`;
+    const cell = (sc) => {
+      if (sc == null) return '<td class="num" style="color:var(--muted)">–</td>';
+      const L = levelOf(sc);
+      return `<td class="num" title="${L.name}"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${lvColor(L)};margin-right:6px"></span>${sc}</td>`;
+    };
+    $('#rosTable').innerHTML = `<thead><tr><th>ที่</th><th class="l">ชื่อ – สกุล</th><th>ชั้น</th>${ROSTER_COLS.map((k) => `<th>${R.IND_LABEL[k]}</th>`).join('')}<th>ผลการคัดกรอง</th></tr></thead><tbody>` +
+      (rows.length ? rows.map((s, i) => `<tr><td class="num">${i + 1}</td><td class="l">${esc(s.name)}</td><td>${gShort[s.grade] || ''}</td>${ROSTER_COLS.map((k) => cell((s.scores || {})[k])).join('')}
+        <td>${s.remedial ? '<span class="chk bad">ซ่อมเสริม</span>' : '<span class="chk ok">ผ่านเกณฑ์</span>'}</td></tr>`).join('')
+        : `<tr><td colspan="${ROSTER_COLS.length + 4}" class="empty">ไม่พบรายชื่อตามเงื่อนไข</td></tr>`) + '</tbody>';
+  }
+
   function indList(gr) {
     const names = gr.ind.map((k) => R.IND_LABEL[k].replace(/^การ/, 'การ'));
     if (names.length === 1) return names[0];
@@ -580,10 +610,17 @@
   function summaryParas(o) {
     const ps = [`จากการดำเนินการคัดกรองการอ่านและการเขียนของนักเรียนระดับชั้นประถมศึกษาปีที่ 1 ถึงชั้นมัธยมศึกษาปีที่ 3 ปีการศึกษา ${S.settings.year} พบว่า`];
     o.stats.forEach((s) => {
+      if (!s.total && !s.n) return;
       ps.push(`<b>${s.gr.full.replace('ชั้น', 'ชั้น')}</b> มีนักเรียนทั้งหมด <b>${fmt(s.total)}</b> คน แบ่งเป็นนักเรียนที่บกพร่อง <b>${fmt(s.impaired)}</b> คน และนักเรียนปกติ <b>${fmt(s.normal)}</b> คน ผลการประเมินด้าน${indList(s.gr)} พบว่ามีนักเรียนอยู่ในระดับดีมาก <b>${fmt(s.avg.vg)}</b> คน ระดับดี <b>${fmt(s.avg.g)}</b> คน ระดับพอใช้ <b>${fmt(s.avg.f)}</b> คน และระดับปรับปรุง <b>${fmt(s.avg.p)}</b> คน ตามลำดับ (ค่าเฉลี่ยต่อตัวชี้วัด)`);
     });
     const A = o.avg, an = A.vg + A.g + A.f + A.p;
     ps.push(`<b>สรุปภาพรวม</b> ${esc(S.settings.school)} มีนักเรียนเข้ารับการคัดกรองทั้งสิ้น <b>${fmt(o.total)}</b> คน พบว่านักเรียนที่อยู่ในเกณฑ์ปกติจำนวน <b>${fmt(o.normal)}</b> คน คิดเป็นร้อยละ <b>${pct(o.normal, o.total, 2)}</b> และนักเรียนที่มีภาวะบกพร่องจำนวน <b>${fmt(o.impaired)}</b> คน คิดเป็นร้อยละ <b>${pct(o.impaired, o.total, 2)}</b> โดยผลการประเมินในภาพรวมมีนักเรียนอยู่ในระดับดีมาก <b>${fmt(A.vg)}</b> คน (ร้อยละ ${pct(A.vg, an, 2)}) ระดับดี <b>${fmt(A.g)}</b> คน (ร้อยละ ${pct(A.g, an, 2)}) ระดับพอใช้ <b>${fmt(A.f)}</b> คน (ร้อยละ ${pct(A.f, an, 2)}) และระดับปรับปรุง <b>${fmt(A.p)}</b> คน (ร้อยละ ${pct(A.p, an, 2)}) ข้อมูลดังกล่าวสะท้อนให้เห็นถึงคุณภาพด้านการอ่านและการเขียนของผู้เรียนในแต่ละระดับชั้น และสามารถนำไปใช้เป็นสารสนเทศในการวางแผนพัฒนานักเรียนรายบุคคล รวมทั้งจัดกิจกรรมส่งเสริมและแก้ไขปัญหาด้านการอ่านและการเขียนได้อย่างเหมาะสมและมีประสิทธิภาพต่อไป`);
+    const ros = S.roster || [];
+    if (ros.length) {
+      const fail = ros.filter((s) => s.remedial);
+      const gs = R.GRADES.map((g) => [g.short, fail.filter((s) => s.grade === g.id).length]).filter((x) => x[1]);
+      ps.push(`<b>ผลรายบุคคล</b> นักเรียนที่ผ่านเกณฑ์ (ทุกตัวชี้วัดอยู่ในระดับดีขึ้นไป) จำนวน <b>${fmt(ros.length - fail.length)}</b> คน คิดเป็นร้อยละ <b>${pct(ros.length - fail.length, ros.length, 2)}</b> และนักเรียนที่ไม่ผ่านเกณฑ์ซึ่งต้องเข้าเรียนซ่อมเสริมภาษาไทย จำนวน <b>${fmt(fail.length)}</b> คน คิดเป็นร้อยละ <b>${pct(fail.length, ros.length, 2)}</b>${gs.length ? ` (${gs.map((x) => `${x[0]} ${x[1]} คน`).join(' ')})` : ''}`);
+    }
     // insight
     const ranked = o.stats.filter((s) => s.n).sort((a, b) => b.good / b.n - a.good / a.n);
     if (ranked.length >= 2) {
@@ -882,13 +919,13 @@
   });
   $('#btnEntry').addEventListener('click', () => { renderEntry(); openModal('#mEntry'); });
   $('#btnSample').addEventListener('click', () => {
-    const s = R.sample(); S.grades = s.grades; if (!S.students.length) S.students = s.students; S.isSample = true; save(); renderEntry(); toast('โหลดข้อมูลตัวอย่างแล้ว');
+    const s = R.sample(); S.grades = s.grades; S.roster = s.roster; if (!S.students.length) S.students = s.students; S.isSample = true; save(); renderEntry(); toast('โหลดข้อมูลตัวอย่างแล้ว');
   });
   $('#btnClear').addEventListener('click', (e) => {
     const b = e.currentTarget;
     if (!b.dataset.confirm) { b.dataset.confirm = 1; b.lastChild.textContent = ' ยืนยันล้างข้อมูล?'; setTimeout(() => { delete b.dataset.confirm; b.lastChild.textContent = ' ล้างข้อมูลทั้งหมด'; }, 3500); return; }
     delete b.dataset.confirm; b.lastChild.textContent = ' ล้างข้อมูลทั้งหมด';
-    S.grades = emptyGrades(); S.isSample = false; S.students = []; save(); renderEntry(); toast('ล้างข้อมูลแล้ว พร้อมกรอกข้อมูลจริง');
+    S.grades = emptyGrades(); S.isSample = false; S.students = []; S.roster = []; save(); renderEntry(); toast('ล้างข้อมูลแล้ว พร้อมกรอกข้อมูลจริง');
   });
   $('#btnCSV').addEventListener('click', exportCSV);
   $('#btnExport').addEventListener('click', exportJSON);
@@ -904,6 +941,12 @@
   }));
   $$('#segTable button').forEach((b) => b.addEventListener('click', () => {
     tableMode = b.dataset.v; $$('#segTable button').forEach((x) => x.classList.toggle('on', x === b)); renderTable();
+  }));
+  $('#rosFilter').innerHTML = '<option value="">ทุกชั้น</option>' + R.GRADES.filter((g) => (S.roster || []).some((s) => s.grade === g.id) || !(S.roster || []).length).map((g) => `<option value="${g.id}">${g.short}</option>`).join('');
+  $('#rosFilter').addEventListener('change', renderRoster);
+  $('#rosSearch').addEventListener('input', renderRoster);
+  $$('#segRoster button').forEach((b) => b.addEventListener('click', () => {
+    rosterMode = b.dataset.v; $$('#segRoster button').forEach((x) => x.classList.toggle('on', x === b)); renderRoster();
   }));
   $('#cScore').addEventListener('input', calcLevel);
   $('#cFull').addEventListener('input', calcLevel);

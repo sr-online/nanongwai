@@ -59,7 +59,7 @@
     return {
       settings: { school: 'โรงเรียนบ้านนาหนองหวาย', area: 'สำนักงานเขตพื้นที่การศึกษาประถมศึกษานครพนม เขต 2', year: 2569 },
       roster: s.roster, students: s.students,
-      committee: R.COMMITTEE.map(() => ''), steps: {}
+      steps: {}
     };
   }
   function readJSON(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }
@@ -72,7 +72,6 @@
       // ย้ายค่าเดิมจากเทมเพลต (โรงเรียนคลังสื่อฯ) ไปเป็นค่าโรงเรียนปัจจุบัน
       if (/คลังสื่อ/.test(out.settings.school || '')) out.settings.school = defaults().settings.school;
       if (!out.settings.area || out.settings.area === 'สำนักงานเขตพื้นที่การศึกษาประถมศึกษา เขต 2') out.settings.area = defaults().settings.area;
-      if (Array.isArray(d.committee)) out.committee = R.COMMITTEE.map((_, i) => d.committee[i] || '');
       if (d.steps && typeof d.steps === 'object') out.steps = d.steps;
       // ข้อมูลรุ่นเก่า (v1) เก็บเพียงจำนวนรวมรายชั้น ไม่มีคะแนนรายบุคคล → ใช้รายชื่อและคะแนนของโรงเรียน
       if (!legacy && Array.isArray(d.roster)) out.roster = cleanRoster(d.roster);
@@ -319,7 +318,7 @@
       const ph = R.PHASES[s.phase];
       return `<div class="step ${S.steps[s.no] ? 'done' : ''}" data-no="${s.no}">
         <div class="no ${ph.cls}">${s.no}</div>
-        <div><h4>${s.title}</h4><div class="meta">${ph.name} · ${ph.th} · ${s.d[0]}–${s.d[1]} ก.ค.</div></div>
+        <div><h4>${s.title}</h4><div class="meta">${ph.name} · ${ph.th} · ${stepRange(s, true)}</div></div>
         <svg class="chev" width="20" height="20"><use href="#i-chev"/></svg>
         <div class="detail" hidden><ul>${s.detail.map((x) => `<li>${x}</li>`).join('')}</ul>
           <label class="check-done"><input type="checkbox" ${S.steps[s.no] ? 'checked' : ''}> ดำเนินการเสร็จแล้ว</label></div>
@@ -381,14 +380,28 @@
     $('#matrix').innerHTML = h + '</tbody>';
   }
 
+  // ช่วงเวลาดำเนินงาน (ตามคำสั่งโรงเรียนที่ 24/2569 และ 25/2569)
+  const MONTH_FULL = ['', 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+  const MONTH_SHORT = ['', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+  const dayNo = (md) => Math.round(Date.UTC(2000, md[0] - 1, md[1]) / 864e5);
+  function stepRange(s, short) {
+    const M = short ? MONTH_SHORT : MONTH_FULL, [a, b] = s.d;
+    if (a[0] === b[0] && a[1] === b[1]) return `${a[1]} ${M[a[0]]}`;
+    return a[0] === b[0] ? `${a[1]}–${b[1]} ${M[a[0]]}` : `${a[1]} ${M[a[0]]} – ${b[1]} ${M[b[0]]}`;
+  }
   function renderGantt() {
     const ph = { P: '#6d5dfc', D: '#e8508a', C: '#14a6b8', A: '#f08a24' };
-    let h = '<div></div><div class="days">' + [1, 5, 10, 15, 20, 25, 31].map((d) => `<span>${d}</span>`).join('') + '</div>';
+    const start = Math.min(...R.STEPS.map((s) => dayNo(s.d[0]))), end = Math.max(...R.STEPS.map((s) => dayNo(s.d[1])));
+    const span = end - start + 1;
+    const m0 = R.STEPS.reduce((m, s) => Math.min(m, s.d[0][0]), 12), m1 = R.STEPS.reduce((m, s) => Math.max(m, s.d[1][0]), 1);
+    const ticks = [];
+    for (let m = m0; m <= m1; m++) ticks.push(`<span style="position:absolute;left:${Math.max(0, (dayNo([m, 1]) - start) / span * 100)}%">${MONTH_SHORT[m]}</span>`);
+    let h = `<div></div><div class="days" style="position:relative;height:16px;display:block">${ticks.join('')}</div>`;
     R.STEPS.forEach((s) => {
-      const l = (s.d[0] - 1) / 31 * 100, w = (s.d[1] - s.d[0] + 1) / 31 * 100;
-      h += `<div class="lbl"><b>${s.no}</b> ${s.title}</div><div class="track"><div class="bar" style="left:${l}%;width:${w}%;background:${ph[s.phase]}" data-tip="${esc(`<b>${s.no} ${s.title}</b><br>${s.d[0]} – ${s.d[1]} กรกฎาคม ${S.settings.year}<br>(${s.d[1] - s.d[0] + 1} วัน · ${R.PHASES[s.phase].name})`)}"></div></div>`;
+      const l = (dayNo(s.d[0]) - start) / span * 100, n = dayNo(s.d[1]) - dayNo(s.d[0]) + 1, w = Math.max(n / span * 100, 1.2);
+      h += `<div class="lbl"><b>${s.no}</b> ${s.title}</div><div class="track"><div class="bar" style="left:${l}%;width:${w}%;background:${ph[s.phase]}" data-tip="${esc(`<b>${s.no} ${s.title}</b><br>${stepRange(s)} ${S.settings.year}<br>(${n} วัน · ${R.PHASES[s.phase].name})`)}"></div></div>`;
     });
-    $('#gantt').innerHTML = h + `<div></div><div style="font-size:12px;color:var(--muted)">* แผนปฏิทินโดยประมาณ ภายในช่วง 1 – 31 กรกฎาคม ${S.settings.year}</div>`;
+    $('#gantt').innerHTML = h + `<div></div><div style="font-size:12px;color:var(--muted)">* ตามกรอบเวลาในคำสั่งโรงเรียนบ้านนาหนองหวาย ที่ 24/2569 และ 25/2569 (${stepRange({ d: [R.STEPS[0].d[0], R.STEPS[R.STEPS.length - 1].d[1]] })} ${S.settings.year})</div>`;
     bindTips($('#gantt'));
   }
 
@@ -812,10 +825,24 @@
 
   function renderDocs() {
     const el = $('#docsA');
-    el.innerHTML = R.DOCS_A.map((d, i) => `<div class="doc-thumb" data-i="${i}"><img src="${d.src}" alt="${d.cap}" loading="lazy"><span>${d.cap}</span></div>`).join('');
-    $$('.doc-thumb', el).forEach((t) => t.addEventListener('click', () => openLB(R.DOCS_A, +t.dataset.i)));
+    el.innerHTML = R.ORDERS.map((o, oi) => `<div class="order-block">
+        <div class="order-head"><div><b>คำสั่งโรงเรียนบ้านนาหนองหวาย ที่ ${o.no}</b><br><span>เรื่อง ${o.title}</span><br><small>สั่ง ณ วันที่ ${o.date}</small></div>
+          <a class="btn btn-soft btn-sm no-print" href="${o.pdf}" target="_blank" rel="noopener"><svg><use href="#i-down"/></svg> เปิดไฟล์ PDF</a></div>
+        <div class="docs">${o.pages.map((p, i) => `<div class="doc-thumb" data-o="${oi}" data-i="${i}"><img src="${p}" alt="คำสั่งที่ ${o.no} หน้า ${i + 1}" loading="lazy"><span>หน้า ${i + 1}</span></div>`).join('')}</div>
+      </div>`).join('');
+    $$('.doc-thumb', el).forEach((t) => t.addEventListener('click', () => {
+      const o = R.ORDERS[+t.dataset.o];
+      openLB(o.pages.map((p, i) => ({ src: p, cap: `คำสั่งที่ ${o.no} หน้า ${i + 1}` })), +t.dataset.i);
+    }));
     const qr = (arr) => arr.map((q) => `<div class="card qr-card"><img src="${q.src}" alt="QR ${q.t}"><h4>${q.t}</h4><p>${q.d}</p></div>`).join('');
     $('#qrP').innerHTML = qr(R.QR_P);
+  }
+
+  function renderCerts() {
+    const el = $('#certs'); if (!el) return;
+    el.innerHTML = R.CERTS.map((c, i) => `<figure class="cert" data-i="${i}"><img src="${c.src}" alt="${esc(c.cap)}" loading="lazy">
+      <figcaption><b>รายวิชา${c.subject}</b><span>เลขที่ ${c.no}</span></figcaption></figure>`).join('');
+    $$('.cert', el).forEach((f) => f.addEventListener('click', () => openLB(R.CERTS, +f.dataset.i)));
   }
 
   function renderGallery() {
@@ -913,10 +940,13 @@
   }
 
   function renderCommittee() {
-    const roleCls = { 'ที่ปรึกษา': 'c1', 'ประธาน': 'c2', 'รองประธาน': 'c5', 'ผู้ช่วย': 'c3' };
-    $('#committee').innerHTML = `<thead><tr><th>ที่</th><th class="l">ชื่อ – สกุล</th><th class="l">ตำแหน่ง</th><th>หน้าที่</th></tr></thead><tbody>` +
-      R.COMMITTEE.map((c, i) => `<tr><td class="num">${i + 1}</td><td class="l" style="min-width:220px"><input data-ci="${i}" value="${esc(S.committee[i] || '')}" placeholder="……………………………………"></td><td class="l">${c[0]}</td><td><span class="role ${roleCls[c[1]]}" style="color:#fff">${c[1]}</span></td></tr>`).join('') + '</tbody>';
-    $$('#committee input').forEach((inp) => inp.addEventListener('input', () => { S.committee[+inp.dataset.ci] = inp.value; save(); }));
+    const roleCls = (r) => /^ประธาน/.test(r) ? 'c2' : /^รองประธาน/.test(r) ? 'c5' : /เลขานุการ/.test(r) ? 'c1' : 'c3';
+    let h = `<thead><tr><th>ที่</th><th class="l">ชื่อ – สกุล</th><th>ตำแหน่งในคณะกรรมการ</th></tr></thead><tbody>`;
+    R.COMMITTEE.forEach((g) => {
+      h += `<tr class="grp"><td colspan="3" class="l" style="background:var(--bg-2)"><b>${g.group}</b> <small style="color:var(--muted)">· คำสั่งที่ ${g.order}</small><div style="font-size:12.5px;color:var(--ink-2);font-weight:400;margin-top:2px">หน้าที่: ${g.duty}</div></td></tr>`;
+      h += g.members.map((m, i) => `<tr><td class="num">${i + 1}</td><td class="l" style="white-space:nowrap">${m[0]}</td><td><span class="role ${roleCls(m[1])}" style="color:#fff">${m[1]}</span></td></tr>`).join('');
+    });
+    $('#committee').innerHTML = h + '</tbody>';
   }
 
   function setupAppendix() {
@@ -938,7 +968,7 @@
     if (p === 'principle') { renderCycle(); renderDefModel(); applyKpis(animate); }
     if (p === 'method') { renderPDCA(); renderSteps(); renderBand(); renderMatrix(); renderGantt(); }
     if (p === 'results') renderResults(animate);
-    if (p === 'appendix') { renderDocs(); renderGallery(); renderCommittee(); renderStudents(); }
+    if (p === 'appendix') { renderDocs(); renderGallery(); renderCerts(); renderCommittee(); renderStudents(); }
   }
   function route() {
     let p = (location.hash || '').replace('#', '');

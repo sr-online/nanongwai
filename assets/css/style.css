@@ -390,3 +390,18 @@ footer{border-top:1px solid var(--line);padding-block:26px;color:var(--muted);fo
   *{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}
 }
+
+/* ===== ภาคผนวก: คำสั่งจริง / เกียรติบัตร ===== */
+#docsA{display:grid;gap:22px}
+.order-block .order-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px;font-size:14px;line-height:1.55}
+.order-block .order-head span{color:var(--ink-2)}
+.order-block .order-head small{color:var(--muted)}
+.order-block .docs{grid-template-columns:repeat(auto-fill,minmax(170px,230px))}
+.order-block + .order-block{border-top:1px solid var(--line);padding-top:20px}
+.certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.cert{margin:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);cursor:zoom-in;transition:.2s}
+.cert:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.cert img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:#fff}
+.cert figcaption{display:flex;justify-content:space-between;gap:8px;padding:10px 14px;font-size:13.5px}
+.cert figcaption span{color:var(--muted);font-size:12.5px}
+@media print{.order-block .docs{grid-template-columns:repeat(2,1fr)}.certs{grid-template-columns:repeat(3,1fr)}}

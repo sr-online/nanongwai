@@ -325,6 +325,20 @@
       <div class="tbl-wrap"><table class="tbl" id="resTable"></table></div>
     </div>
 
+    <!-- per-student -->
+    <div class="section" id="rosterSec" hidden>
+      <div class="sec-head">
+        <div><div class="eyebrow">Individual Results</div><h2>ผลการคัดกรองรายบุคคล</h2><p>คะแนนร้อยละรายตัวชี้วัด — ผ่านเกณฑ์เมื่อทุกตัวชี้วัดอยู่ในระดับดีขึ้นไป (ร้อยละ 50 ขึ้นไป) นักเรียนที่ไม่ผ่านเกณฑ์เข้าเรียนซ่อมเสริมภาษาไทย</p></div>
+        <div class="toolbar">
+          <div class="seg" id="segRoster"><button class="on" data-v="all">ทั้งหมด</button><button data-v="pass">ผ่านเกณฑ์</button><button data-v="fail">ซ่อมเสริม</button></div>
+          <select class="input" id="rosFilter"></select>
+          <input class="input" id="rosSearch" placeholder="ค้นหาชื่อ…" style="width:150px">
+        </div>
+      </div>
+      <div id="rosStat" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px"></div>
+      <div class="tbl-wrap"><table class="tbl" id="rosTable"></table></div>
+    </div>
+
     <!-- summary -->
     <div class="section">
       <div class="sec-head"><div><div class="eyebrow">12 · Conclusion</div><h2>สรุปผลการคัดกรองการอ่านและการเขียน</h2><p>บทสรุปเรียบเรียงอัตโนมัติจากข้อมูล</p></div>

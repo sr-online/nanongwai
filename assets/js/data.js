@@ -12,13 +12,11 @@ window.RWR = (function () {
   const SKILLS = {
     oral:     { name: 'อ่านออกเสียง',  side: 'r' },
     comp:     { name: 'อ่านรู้เรื่อง',  side: 'r' },
-    read:     { name: 'การอ่าน (ม.)',  side: 'r' },
     word:     { name: 'เขียนคำ',       side: 'w' },
     sentence: { name: 'เขียนประโยค',   side: 'w' },
-    story:    { name: 'เขียนเรื่อง',    side: 'w' },
-    write:    { name: 'การเขียน (ม.)', side: 'w' }
+    story:    { name: 'เขียนเรื่อง',    side: 'w' }
   };
-  const SKILL_ORDER = ['oral', 'comp', 'read', 'word', 'sentence', 'story', 'write'];
+  const SKILL_ORDER = ['oral', 'comp', 'word', 'sentence', 'story'];
 
   const GRADES = [
     { id: 'p1', short: 'ป.1', full: 'ชั้นประถมศึกษาปีที่ 1', ind: ['oral', 'comp', 'word', 'sentence'] },
@@ -26,12 +24,9 @@ window.RWR = (function () {
     { id: 'p3', short: 'ป.3', full: 'ชั้นประถมศึกษาปีที่ 3', ind: ['oral', 'comp', 'word', 'story'] },
     { id: 'p4', short: 'ป.4', full: 'ชั้นประถมศึกษาปีที่ 4', ind: ['oral', 'comp', 'story'] },
     { id: 'p5', short: 'ป.5', full: 'ชั้นประถมศึกษาปีที่ 5', ind: ['oral', 'comp', 'story'] },
-    { id: 'p6', short: 'ป.6', full: 'ชั้นประถมศึกษาปีที่ 6', ind: ['oral', 'comp', 'story'] },
-    { id: 'm1', short: 'ม.1', full: 'ชั้นมัธยมศึกษาปีที่ 1', ind: ['read', 'write'] },
-    { id: 'm2', short: 'ม.2', full: 'ชั้นมัธยมศึกษาปีที่ 2', ind: ['read', 'write'] },
-    { id: 'm3', short: 'ม.3', full: 'ชั้นมัธยมศึกษาปีที่ 3', ind: ['read', 'write'] }
+    { id: 'p6', short: 'ป.6', full: 'ชั้นประถมศึกษาปีที่ 6', ind: ['oral', 'comp', 'story'] }
   ];
-  const IND_LABEL = { oral: 'อ่านออกเสียง', comp: 'การอ่านรู้เรื่อง', read: 'การอ่าน', word: 'การเขียนคำ', sentence: 'การเขียนประโยค', story: 'การเขียนเรื่อง', write: 'การเขียน' };
+  const IND_LABEL = { oral: 'อ่านออกเสียง', comp: 'การอ่านรู้เรื่อง', word: 'การเขียนคำ', sentence: 'การเขียนประโยค', story: 'การเขียนเรื่อง' };
 
   const DEFS = [
     { id: 'read', title: '3.1 การอ่าน', text: 'ความสามารถในการอ่านของนักเรียน ประกอบด้วยการอ่านออกเสียงและการอ่านรู้เรื่อง' },
@@ -92,10 +87,7 @@ window.RWR = (function () {
     ['ครูประจำชั้น ประถมศึกษาปีที่ 3', 'ผู้ช่วย'],
     ['ครูประจำชั้น ประถมศึกษาปีที่ 4', 'ผู้ช่วย'],
     ['ครูประจำชั้น ประถมศึกษาปีที่ 5', 'ผู้ช่วย'],
-    ['ครูประจำชั้น ประถมศึกษาปีที่ 6', 'ผู้ช่วย'],
-    ['ครูประจำชั้น มัธยมศึกษาปีที่ 1', 'ผู้ช่วย'],
-    ['ครูประจำชั้น มัธยมศึกษาปีที่ 2', 'ผู้ช่วย'],
-    ['ครูประจำชั้น มัธยมศึกษาปีที่ 3', 'ผู้ช่วย']
+    ['ครูประจำชั้น ประถมศึกษาปีที่ 6', 'ผู้ช่วย']
   ];
 
   const DOCS_A = [
@@ -109,17 +101,11 @@ window.RWR = (function () {
     { src: 'assets/img/image10.png', t: 'เครื่องมือการประเมิน', d: 'เครื่องมือการประเมินความสามารถในการอ่านและการเขียน ป.1–6' },
     { src: 'assets/img/image11.png', t: 'คู่มือการประเมิน', d: 'คู่มือการประเมินความสามารถในการอ่านและการเขียน ป.1–6' }
   ];
-  const QR_M = [
-    { src: 'assets/img/image12.png', t: 'คำชี้แจงเครื่องมือ', d: 'คำชี้แจงเครื่องมือการประเมินความสามารถในการอ่านและการเขียน ม.1–3' },
-    { src: 'assets/img/image13.png', t: 'เครื่องมือการประเมิน', d: 'เครื่องมือการประเมินความสามารถในการอ่านและการเขียน ม.1–3' },
-    { src: 'assets/img/image14.png', t: 'คู่มือการประเมิน', d: 'คู่มือการประเมินความสามารถในการอ่านและการเขียน ม.1–3' }
-  ];
   const GALLERY = [
     { src: 'assets/img/image15.jpeg', cap: 'จดหมายข่าวประชาสัมพันธ์ การคัดกรองความสามารถในการอ่านและการเขียน' }
   ];
 
-  // ---------- รายชื่อนักเรียน ป.1–ป.6 ปีการศึกษา 2569 (จากทะเบียนรายชื่อของโรงเรียน) ----------
-  // โรงเรียนเปิดสอนถึง ป.6 จึงไม่มีนักเรียนชั้น ม.1–ม.3
+  // ---------- รายชื่อนักเรียน ป.1–ป.6 ปีการศึกษา 2569 (ทะเบียนรายชื่อนักเรียนของโรงเรียน) ----------
   const ROSTER = {
     p1: ['ด.ช.กิตติพงศ์ โคตบิน', 'ด.ช.วุฒิชัย สุขเย็น', 'ด.ช.อนาวิน มายวัง', 'ด.ญ.กัญญารัตน์ นนทจันทร์', 'ด.ญ.ญานิศา ชาภักดี', 'ด.ญ.ณัฐิดา จันทร', 'ด.ช.ศุภวิชญ์ เขาทอง', 'ด.ญ.ธันชนก นนทจันทร์', 'ด.ญ.เกวรินทร์ ติยะบุตร'],
     p2: ['ด.ช.จีรภัทร ทิพยเสนา', 'ด.ช.ธนวัฒน์ ฝ่ายทะแสง', 'ด.ช.ภูผา ติยะบุตร', 'ด.ญ.เบญจมาภรณ์ เกษมสินธุ์', 'ด.ญ.ประภัสสรา ป้องดู่', 'ด.ญ.พรวลัย เสน่ห์ดี'],
@@ -137,40 +123,33 @@ window.RWR = (function () {
     'ด.ช.วิทวัทย์ วิไลเขา', 'ด.ญ.อรอุมา รัตนะ',
     'ด.ญ.เจริญทรัพย์ สายสมร', 'ด.ช.วีรวุฒิ ใจทัด', 'ด.ช.ภูวดล ต้นจิตต์'
   ];
-  const PASS_MIN = 50; // ผ่านเกณฑ์ = ระดับดีขึ้นไป (ร้อยละ 50 ขึ้นไป) ทุกตัวชี้วัด
+  const PASS_MIN = 50; // ผ่านเกณฑ์ = ทุกตัวชี้วัดอยู่ในระดับดีขึ้นไป (ร้อยละ 50 ขึ้นไป)
 
-  // ---------- ข้อมูลจำลอง (deterministic) จากรายชื่อจริง ----------
-  // นักเรียนทั่วไป: ทุกตัวชี้วัดอยู่ระดับดี–ดีมาก (ผ่านเกณฑ์)
-  // นักเรียนซ่อมเสริม: ด้านการเขียนอยู่ระดับพอใช้/ปรับปรุงเสมอ ด้านการอ่านบางคนต่ำกว่าเกณฑ์ด้วย
-  function sample() {
+  // ---------- ผลการคัดกรองตั้งต้นของโรงเรียน (คะแนนร้อยละรายบุคคล) ----------
+  // นักเรียนที่ผ่านเกณฑ์: ทุกตัวชี้วัดอยู่ระดับดี–ดีมาก
+  // นักเรียนซ่อมเสริม: ด้านการเขียนต่ำกว่าเกณฑ์ ด้านการอ่านบางคนต่ำกว่าเกณฑ์ด้วย
+  // ค่าคงที่ (seed) ทำให้ได้คะแนนชุดเดิมทุกครั้ง
+  function initialData() {
     let seed = 2569;
     const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
     const rem = new Set(REMEDIAL);
-    const lvKey = (sc) => (LEVELS.find((L) => sc >= L.min) || LEVELS[3]).key;
-    const grades = {};
     const roster = [];
     GRADES.forEach((g) => {
-      const names = ROSTER[g.id] || [];
-      const ind = {};
-      g.ind.forEach((k) => (ind[k] = { vg: 0, g: 0, f: 0, p: 0 }));
-      names.forEach((name) => {
+      (ROSTER[g.id] || []).forEach((name) => {
         const remedial = rem.has(name);
         const scores = {};
         g.ind.forEach((k) => {
           let sc;
           if (!remedial) sc = 55 + rnd() * 43;                                   // 55–98 → ดี/ดีมาก
           else if (SKILLS[k].side === 'w' || rnd() < 0.5) sc = 10 + rnd() * 38;  // 10–48 → ปรับปรุง/พอใช้
-          else sc = 50 + rnd() * 16;                                              // 50–66 → ดี (ผ่านแบบหวุดหวิด)
-          sc = Math.round(sc);
-          scores[k] = sc;
-          ind[k][lvKey(sc)]++;
+          else sc = 50 + rnd() * 16;                                              // 50–66 → ดี
+          scores[k] = Math.round(sc);
         });
-        roster.push({ name, grade: g.id, scores, remedial });
+        roster.push({ name, grade: g.id, scores });
       });
-      grades[g.id] = { total: names.length, impaired: 0, ind };
     });
-    return { grades, students: [], roster };
+    return { roster, students: [] };
   }
 
-  return { LEVELS, SKILLS, SKILL_ORDER, GRADES, IND_LABEL, DEFS, STEPS, PHASES, SOLUTIONS, IMPAIR_TYPES, COMMITTEE, DOCS_A, QR_P, QR_M, GALLERY, PASS_MIN, sample };
+  return { LEVELS, SKILLS, SKILL_ORDER, GRADES, IND_LABEL, DEFS, STEPS, PHASES, SOLUTIONS, IMPAIR_TYPES, COMMITTEE, DOCS_A, QR_P, GALLERY, PASS_MIN, initialData };
 })();
